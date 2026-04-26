@@ -49,6 +49,6 @@ Crear interfaces simples para interactuar con la aplicación.
 - [x] Verificar manualmente en el navegador que el CRUD funcione correctamente.
 
 ## 8. Finalización
-- [ ] Documentar el código con comentarios útiles.
-- [ ] Realizar commits de tus cambios.
-- [ ] Crear el Pull Request hacia la rama principal.
+- [x] Documentar el código con comentarios útiles.
+- [x] Realizar commits de tus cambios.
+- [x] Crear el Pull Request hacia la rama principal.

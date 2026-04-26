@@ -48,14 +48,30 @@ bin/rails test test/models/article_test.rb
 
 > **Nota sobre Fixtures:** Si las pruebas fallan indicando que existen registros inesperados, revisa o vacía el archivo `test/fixtures/articles.yml`.
 
-## 5. Servidor de Desarrollo
+## 5. Calidad de Código (Linting)
+Para mantener el código limpio, se recomienda usar RuboCop (si está en el Gemfile):
+```bash
+# Analizar el código
+bundle exec rubocop
+
+# Corregir automáticamente errores de estilo
+bundle exec rubocop -A
+```
+
+## 6. Servidor de Desarrollo
 Iniciar el servidor local (usualmente en http://localhost:3000):
 ```bash
 bin/rails server
 ```
 
-## 6. Consola de Rails
+## 7. Consola de Rails
 Entrar a la consola interactiva para manipular datos:
 ```bash
 bin/rails console
+```
+
+## 8. Limpieza de Temporales
+Limpiar logs y archivos temporales de Rails:
+```bash
+bin/rails log:clear tmp:clear
 ```
