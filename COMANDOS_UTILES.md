@@ -1,77 +1,115 @@
-# Comandos Útiles - Encyclopedia Rails
+# Guía Maestra de Comandos y Estándares - Ruby on Rails
 
-Este archivo contiene los comandos de terminal necesarios para el desarrollo, pruebas y despliegue del proyecto.
+Esta guía detalla los comandos esenciales y las mejores prácticas para el desarrollo de aplicaciones robustas en Rails.
 
-## 1. Configuración y Dependencias
-Instalar gemas del proyecto:
+## 1. Configuración del Entorno
+Siempre use `bin/` para asegurar que está utilizando la versión de los ejecutables instalada en su proyecto.
+
 ```bash
+# Instalar dependencias definidas en el Gemfile
 bundle install
+
+# Actualizar gemas específicas respetando versiones
+bundle update <gem_name>
 ```
 
-## 2. Generación de Código (Scaffolding/Modelos)
-Crear el modelo Article con sus atributos:
+## 2. Generación de Modelos y Relaciones
+Para seguir los estándares de Rails, utilice generadores para crear modelos con tipos de datos correctos e índices de base de datos.
+
+### Ejemplo: Sistema de Enciclopedia con Comentarios
 ```bash
+# 1. Modelo Principal
 bin/rails generate model Article title:string content:text author:string date:date
+
+# 2. Modelo Relacionado (Uno a Muchos)
+bin/rails generate model Comment body:text article:references
 ```
 
-Generar el controlador para Articles:
-```bash
-bin/rails generate controller Articles
-```
+## 3. Gestión y Debugging de Base de Datos
+Siga el ciclo de vida de las migraciones y use estas herramientas para diagnosticar problemas.
 
-## 3. Base de Datos
-Ejecutar migraciones pendientes:
 ```bash
+# Ejecutar migraciones
 bin/rails db:migrate
-```
 
-Resetear la base de datos (si es necesario):
-```bash
-bin/rails db:migrate:reset
-```
+# VER EL ESTADO: ¿Qué migraciones faltan o fallaron?
+bin/rails db:migrate:status
 
-## 4. Pruebas (Minitest)
-Preparar la base de datos de pruebas (limpiar datos):
-```bash
+# VER EL ESQUEMA: Inspeccionar la estructura actual de tablas
+cat db/schema.rb
+
+# LIMPIEZA TOTAL: Resetear la DB de pruebas si hay datos residuales
 bin/rails db:test:prepare
 ```
 
-Ejecutar todas las pruebas del proyecto:
+## 4. Creación de Endpoints (Flujo del Reto)
+Para crear una nueva funcionalidad, siga siempre este orden lógico:
+
+### Paso 1: Definir la Ruta (`config/routes.rb`)
+```ruby
+# Crea rutas estándar para el CRUD
+resources :articles
+# Establece la página principal
+root "articles#index"
+```
+
+### Paso 2: Crear el Controlador y la Acción (`app/controllers/articles_controller.rb`)
+```ruby
+def index
+  @articles = Article.all
+end
+```
+
+### Paso 3: Implementar la Lógica en el Modelo (`app/models/article.rb`)
+```ruby
+def self.search(query)
+  where("title LIKE ?", "%#{query}%")
+end
+```
+
+### Paso 4: Crear la Vista (`app/views/articles/index.html.erb`)
+```erb
+<% @articles.each do |article| %>
+  <%= link_to article.title, article %>
+<% end %>
+```
+
+## 5. Pruebas y Calidad (Estándar Shopify/Rails)
+La calidad se garantiza con pruebas automatizadas y análisis estático.
+
 ```bash
+# Ejecutar todas las pruebas
 bin/rails test
-```
 
-Ejecutar solo las pruebas del modelo Article:
-```bash
+# Ejecutar una prueba específica (Modelo o Controlador)
 bin/rails test test/models/article_test.rb
+bin/rails test test/controllers/articles_controller_test.rb
 ```
 
-> **Nota sobre Fixtures:** Si las pruebas fallan indicando que existen registros inesperados, revisa o vacía el archivo `test/fixtures/articles.yml`.
+## 6. Consola y Debugging de Datos
+Herramientas para interactuar con los datos en tiempo real.
 
-## 5. Calidad de Código (Linting)
-Para mantener el código limpio, se recomienda usar RuboCop (si está en el Gemfile):
 ```bash
-# Analizar el código
-bundle exec rubocop
-
-# Corregir automáticamente errores de estilo
-bundle exec rubocop -A
-```
-
-## 6. Servidor de Desarrollo
-Iniciar el servidor local (usualmente en http://localhost:3000):
-```bash
-bin/rails server
-```
-
-## 7. Consola de Rails
-Entrar a la consola interactiva para manipular datos:
-```bash
+# Abrir consola de Rails
 bin/rails console
+
+# Ejemplos de Debugging en consola:
+Article.count                     # ¿Hay datos?
+Article.last                      # Ver el último registro creado
+Article.search("Query").to_sql    # Ver la consulta SQL generada
 ```
 
-## 8. Limpieza de Temporales
-Limpiar logs y archivos temporales de Rails:
+## 7. Mantenimiento y Logs
 ```bash
-bin/rails log:clear tmp:clear
+# Limpiar archivos temporales y logs antiguos
+bin/rails tmp:clear log:clear
+
+# Ver logs en tiempo real para detectar errores 500
+tail -f log/development.log
 ```
+
+## Estándares de Código a Recordar:
+1. **DRY (Don't Repeat Yourself):** Use `before_action` en controladores y `partials` en vistas.
+2. **Fat Models, Skinny Controllers:** La lógica de negocio (como la búsqueda) vive en el modelo.
+3. **Strong Parameters:** Use `.require(:model).permit(:attr)` para seguridad.
+4. **Naming:** Modelos en Singular (`Article`), Controladores en Plural (`ArticlesController`).
