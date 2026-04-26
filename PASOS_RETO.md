@@ -24,8 +24,8 @@ La prueba `has search functionality` y `returns accurate search results` requier
 
 ## 4. Desarrollo del Controlador (CRUD)
 Implementar las acciones estándar de Rails para cumplir con los principios MVC.
-- [ ] Generar el controlador: `bin/rails generate controller Articles`.
-- [ ] Implementar las acciones:
+- [x] Generar el controlador: `bin/rails generate controller Articles`.
+- [x] Implementar las acciones:
     - `index`: Listar todos los artículos (y manejar la búsqueda).
     - `show`: Mostrar un artículo específico.
     - `new` / `create`: Formulario y lógica para crear artículos.
@@ -33,19 +33,20 @@ Implementar las acciones estándar de Rails para cumplir con los principios MVC.
     - `destroy`: Lógica para eliminar artículos.
 
 ## 5. Configuración de Rutas
-- [ ] Definir las rutas en `config/routes.rb` usando `resources :articles`.
-- [ ] (Opcional) Establecer la página de inicio en `articles#index`.
+- [x] Definir las rutas en `config/routes.rb` usando `resources :articles`.
+- [x] (Opcional) Establecer la página de inicio en `articles#index`.
 
 ## 6. Creación de Vistas
 Crear interfaces simples para interactuar con la aplicación.
-- [ ] `index.html.erb`: Lista de artículos y formulario de búsqueda.
-- [ ] `show.html.erb`: Detalle del artículo (título, contenido, autor, fecha).
-- [ ] `new.html.erb` y `edit.html.erb`: Formularios para el modelo.
+- [x] `index.html.erb`: Lista de artículos y formulario de búsqueda.
+- [x] `show.html.erb`: Detalle del artículo (título, contenido, autor, fecha).
+- [x] `new.html.erb` y `edit.html.erb`: Formularios para el modelo.
+
 
 ## 7. Validación y Pruebas
-- [ ] Ejecutar las pruebas: `bin/rails test`.
-- [ ] Asegurarse de que todas las pruebas en `test/models/article_test.rb` pasen.
-- [ ] Verificar manualmente en el navegador que el CRUD funcione correctamente.
+- [x] Ejecutar las pruebas: `bin/rails test`.
+- [x] Asegurarse de que todas las pruebas en `test/models/article_test.rb` pasen.
+- [x] Verificar manualmente en el navegador que el CRUD funcione correctamente.
 
 ## 8. Finalización
 - [ ] Documentar el código con comentarios útiles.
